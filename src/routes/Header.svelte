@@ -1,7 +1,7 @@
 <script lang="ts">
     import UserIcon from '$lib/assets/user.png';
     
-    let logged_in = true;
+    let { user }: { user: Omit<User, "password"> } = $props();
 </script>
 
 <header class="bg-neutral p-4">
@@ -26,7 +26,7 @@
 			</div>
 		</div>
 	
-		{#if logged_in}
+		{#if user.username}
 			<a href="/profile">
 				<div class="avatar">
 					<div class="

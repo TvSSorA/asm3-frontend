@@ -4,12 +4,12 @@
 
     import VNDIcon from '$lib/assets/vnd-icon.svg';
 
-    let { selected_job = $bindable(), i, user }: { selected_job: number | null, i: number, user: boolean } = $props();
+    let { selected_job = $bindable(), username, i, type }: { selected_job: number | null, username: string, i: number, type: "employee" | "company" } = $props();
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class="job {selected_job === i ? "card-bordered border-primary" : ""}" onclick={() => { if (user) selected_job = i }}>
+<div class="job {selected_job === i ? "card-bordered border-primary" : ""}" onclick={() => { if (type === "employee") selected_job = i }}>
     <div class="
         card
         bg-base-100
@@ -20,10 +20,10 @@
             <div class="card-actions justify-between">
                 <h2 class="card-title">Job Title</h2>
 
-                {#if !user}
+                {#if type === "company"}
                     <div class="job-buttons">
-                        <EditJobModal />
-                        <DeleteJobModal />
+                        <EditJobModal {username} />
+                        <DeleteJobModal {username} />
                     </div>
                 {/if}
             </div>
@@ -44,7 +44,7 @@
                 </h1>
             </div>
 
-            {#if !user}
+            {#if type === "company"}
                 <div class="requirements">
                     <h2 class="card-title">Job Requirements</h2>
         

@@ -1,6 +1,9 @@
 <script lang="ts">
     import ChangePasswordModal from "./ChangePasswordModal.svelte";
     import DeleteAccountModal from "./DeleteAccountModal.svelte";
+
+    let { user }: { user: Omit<User, "password"> } = $props();
+    const { username, first_name, last_name } = user;
 </script>
 
 <div class="basic-details
@@ -10,11 +13,11 @@
     shadow-xl
 ">
     <div class="card-body">
-        <h2 class="card-title">First Name Last Name</h2>
-        <p>username</p>
+        <h2 class="card-title">{first_name} {last_name}</h2>
+        <p>{username}</p>
         <div class="card-actions justify-between">
-            <ChangePasswordModal />
-            <DeleteAccountModal />
+            <ChangePasswordModal {username} />
+            <DeleteAccountModal {username} />
         </div>
     </div>
 </div>

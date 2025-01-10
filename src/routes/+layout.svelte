@@ -4,10 +4,11 @@
 
 	import '../app.css';
 
-	let { children } = $props();
+	let { children, data } = $props();
+	const user: Omit<User, "password"> = data;
 </script>
 
-<Header />
+<Header {user} />
 
 <main>
 	{@render children()}
