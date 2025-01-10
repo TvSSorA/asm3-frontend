@@ -49,6 +49,66 @@
                 />
             </label>
 
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">First Name</span>
+                </div>
+    
+                <input 
+                    type="text"
+                    placeholder="First Name"
+                    class="input input-bordered w-full"
+                />
+            </label>
+
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">Last Name</span>
+                </div>
+    
+                <input 
+                    type="text"
+                    placeholder="Last Name"
+                    class="input input-bordered w-full"
+                />
+            </label>
+
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">Account Type</span>
+                </div>
+    
+                <div class="type-choices
+                    flex flex-row justify-center gap-8
+                ">
+                    <label class="
+                        flex flex-row gap-4
+                        label cursor-pointer
+                    ">
+                        <span class="label-text">Employee</span>
+
+                        <input 
+                            type="radio"
+                            name="radio-10"
+                            class="radio checked:bg-primary"
+                        />
+                    </label>
+
+                    <label class="
+                        flex flex-row gap-4
+                        label cursor-pointer
+                    ">
+                        <span class="label-text">Company</span>
+
+                        <input 
+                            type="radio"
+                            name="radio-10"
+                            class="radio checked:bg-primary"
+                        />
+                    </label>
+                </div>
+            </label>
+
             <p class="text-center">
                 Already have an account? <a href="/login" class="text-primary hover:underline">Login</a>
             </p>
