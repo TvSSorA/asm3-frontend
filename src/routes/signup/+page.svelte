@@ -1,3 +1,44 @@
+<script lang="ts">
+    let username: string = $state('');
+    let password: string = $state('');
+    let confirm_password: string = $state('');
+    let first_name: string = $state('');
+    let last_name: string = $state('');
+    let type: string = $state('employee');
+
+    let error: boolean = $state(false);
+    let message: string = $state('');
+
+    async function save_user() {
+        if (password !== confirm_password) {
+            message = 'Passwords do not match';
+            error = true;
+            return;
+        }
+
+        const res = await fetch('/api/user', {
+            method: 'POST',
+            body: JSON.stringify({
+                username,
+                password,
+                type,
+                first_name,
+                last_name
+            })
+        });
+        const body = await res.json();
+
+        if (res.status === 201) {
+            message = 'Successfully created account! You can now login.';
+            error = false;
+        }   
+        else {
+            message = `Error: ${res.status} ${res.statusText} - ${body.message}`;
+            error = true;
+        }
+    }
+</script>
+
 <div class="signup
     flex justify-center
     py-20
@@ -22,6 +63,7 @@
                     type="text"
                     placeholder="Username"
                     class="input input-bordered w-full"
+                    bind:value={username}
                 />
             </label>
     
@@ -34,6 +76,7 @@
                     type="password"
                     placeholder="Password"
                     class="input input-bordered w-full"
+                    bind:value={password}
                 />
             </label>
 
@@ -46,6 +89,7 @@
                     type="password"
                     placeholder="Confirm Password"
                     class="input input-bordered w-full"
+                    bind:value={confirm_password}
                 />
             </label>
 
@@ -58,6 +102,7 @@
                     type="text"
                     placeholder="First Name"
                     class="input input-bordered w-full"
+                    bind:value={first_name}
                 />
             </label>
 
@@ -70,6 +115,7 @@
                     type="text"
                     placeholder="Last Name"
                     class="input input-bordered w-full"
+                    bind:value={last_name}
                 />
             </label>
 
@@ -109,12 +155,14 @@
                 </div>
             </label>
 
+            <h1 class="text-center {error ? "text-error" : "text-success"}">{message}</h1>
+
             <p class="text-center">
                 Already have an account? <a href="/login" class="text-primary hover:underline">Login</a>
             </p>
 
             <div class="card-actions justify-end">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" onclick={save_user}>
                     Sign Up
                 </button>
             </div>
