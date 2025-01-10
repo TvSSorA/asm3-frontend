@@ -4,12 +4,13 @@
 
     import VNDIcon from '$lib/assets/vnd-icon.svg';
 
-    let { selected_job = $bindable(), username, i, type }: { selected_job: number | null, username: string, i: number, type: "employee" | "company" } = $props();
+    let { selected_job_index = $bindable(), job, username, i, type }: { selected_job_index: number | null, job: JobPost, username: string, i: number, type: "employee" | "company" } = $props();
+    const { title, company, salary, requirements } = job;
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class="job {selected_job === i ? "card-bordered border-primary" : ""}" onclick={() => { if (type === "employee") selected_job = i }}>
+<div class="job {selected_job_index === i ? "card-bordered border-primary" : ""}" onclick={() => { if (type === "employee") selected_job_index = i }}>
     <div class="
         card
         bg-base-100
@@ -18,17 +19,17 @@
     ">
         <div class="card-body">
             <div class="card-actions justify-between">
-                <h2 class="card-title">Job Title</h2>
+                <h2 class="card-title">{title}</h2>
 
                 {#if type === "company"}
                     <div class="job-buttons">
-                        <EditJobModal {username} />
-                        <DeleteJobModal {username} />
+                        <EditJobModal {job} {username} />
+                        <DeleteJobModal {title} {username} />
                     </div>
                 {/if}
             </div>
 
-            <p>Company name</p>
+            <p>{company}</p>
 
             <div class="salary
                 flex flex-row items-center gap-2
@@ -40,7 +41,7 @@
                     card-title
                     text-accent underline
                 ">
-                    Salary
+                    {salary}
                 </h1>
             </div>
 
@@ -49,9 +50,9 @@
                     <h2 class="card-title">Job Requirements</h2>
         
                     <ul class="list-disc list-inside">
-                        <li>Requirement 1</li>
-                        <li>Requirement 2</li>
-                        <li>Requirement 3</li>
+                        {#each requirements as requirement}
+                            <li>{requirement}</li>
+                        {/each}
                     </ul>
                 </div>
             {/if}

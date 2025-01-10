@@ -1,5 +1,8 @@
 <script lang="ts">
     import VNDIcon from '$lib/assets/vnd-icon.svg';
+
+    let { selected_job }: { selected_job: JobPost } = $props();
+    const { title, company, salary, requirements } = selected_job;
 </script>
 
 <div class="
@@ -14,8 +17,8 @@
         <div class="basic-details
             flex flex-col gap-2
         ">
-            <h2 class="card-title">Job Title</h2>
-            <p>Company name</p>
+            <h2 class="card-title">{title}</h2>
+            <p>{company}</p>
 
             <div class="salary
                 flex flex-row items-center gap-2
@@ -28,7 +31,7 @@
                     card-title
                     text-accent underline
                 ">
-                    Salary
+                    {salary}
                 </h1>
             </div>
         </div>
@@ -41,9 +44,9 @@
             <h2 class="card-title">Job Requirements</h2>
 
             <ul class="list-disc list-inside">
-                <li>Requirement 1</li>
-                <li>Requirement 2</li>
-                <li>Requirement 3</li>
+                {#each requirements as requirement}
+                    <li>{requirement}</li>
+                {/each}
             </ul>
         </div>
     </div>

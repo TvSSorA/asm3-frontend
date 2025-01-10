@@ -6,9 +6,13 @@
 
     let { data } = $props();
     const { user }: { user: Omit<User, "password">  } = data;
+    let { job_posts }: { job_posts: JobPost[] } = $state(data);
     const { username, type } = user;
 
-    let selected_job: number | null = $state(null);
+    let message: string = $state("");
+
+    let selected_job_index: number | null = $state(null);
+    let selected_job: JobPost | null = $derived(selected_job_index !== null ? job_posts[selected_job_index] : null);
 </script>
 
 <div class="home
@@ -18,7 +22,7 @@
     {#if type === "employee"}
         <h1 class="text-6xl">IT Jobs, made easier.</h1>
 
-        <SearchBar />
+        <SearchBar bind:job_posts bind:message />
 
         <div class="jobs-wrapper
             flex flex-row gap-6
@@ -27,14 +31,14 @@
             <div class="jobs-list
                 flex flex-col gap-8 basis-5/12
             ">
-                {#each Array(2) as _, i}
-                    <Job bind:selected_job_index {username} {i} {type} />
+                {#each job_posts as job, i}
+                    <Job bind:selected_job_index {job} {username} {i} {type} />
                 {/each}
             </div>
             
             <div class="job-display basis-7/12">
                 {#if selected_job !== null}
-                    <JobDetails />
+                    <JobDetails {selected_job} />
                 {/if}
             </div>
         </div>
@@ -47,9 +51,11 @@
             grid grid-cols-3 gap-8
             w-4/5
         ">
-            {#each Array(6) as _, i}
-                <Job bind:selected_job_index {username} {i} {type} />
+            {#each job_posts as job, i}
+                <Job bind:selected_job_index {job} {username} {i} {type} />
             {/each}
         </div>
     {/if}
+
+    <h1 class="text-center text-error text-4xl">{message}</h1>
 </div>
