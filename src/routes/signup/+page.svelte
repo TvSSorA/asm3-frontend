@@ -31,7 +31,7 @@
                 </div>
     
                 <input 
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     class="input input-bordered w-full"
                 />
@@ -43,7 +43,7 @@
                 </div>
     
                 <input 
-                    type="text"
+                    type="password"
                     placeholder="Confirm Password"
                     class="input input-bordered w-full"
                 />

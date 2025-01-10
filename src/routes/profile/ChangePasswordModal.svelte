@@ -11,7 +11,7 @@
             </div>
 
             <input 
-                type="text"
+                type="password"
                 placeholder="New Password"
                 class="input input-bordered w-full"
             />
@@ -23,7 +23,7 @@
             </div>
 
             <input 
-                type="text"
+                type="password"
                 placeholder="Confirm Password"
                 class="input input-bordered w-full"
             />
