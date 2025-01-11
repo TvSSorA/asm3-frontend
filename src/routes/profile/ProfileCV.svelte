@@ -3,6 +3,11 @@
 
     let message: string = $state("");
 
+    function hide_image() {
+        const image = document.getElementById('cv-image') as HTMLImageElement;
+        image.style.display = 'none';
+    }
+
     async function upload_cv() {
         const file_input = document.getElementById('file_input') as HTMLInputElement;
         const files = file_input.files!;
@@ -92,5 +97,12 @@
         </div>
 
         <h1 class="text-center text-error">{message}</h1>
+
+        <img 
+            src="https://asm3-cv-storage.s3.us-east-1.amazonaws.com/{username}-cv.jpg"
+            id="cv-image"
+            alt="CV"
+            onerror={hide_image}
+        >
     </div>
 </div>
