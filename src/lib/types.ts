@@ -13,6 +13,16 @@ type User = {
     last_name: string;
 }
 
+type CVBody = {
+    username: string;
+    file_content: string;
+}
+
+type AccessToken = {
+    token: string,
+    expires: number
+}
+
 type ErrorMessage = {
     message: string;
 }
