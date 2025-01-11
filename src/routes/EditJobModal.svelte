@@ -1,5 +1,31 @@
 <script lang="ts">
-    let requirements: string[] = $state([]);
+    let { job, username }: { job: JobPost, username: string } = $props();
+
+    let title: string = $state(job.title);
+    let requirements: string[] = $state(job.requirements);
+    let salary: number = $state(job.salary);
+
+    let message: string = $state('');
+
+    async function update_job() {
+        const res = await fetch('/api/post', {
+            method: 'PUT',
+            body: JSON.stringify({
+                title,
+                company: username,
+                requirements,
+                salary
+            })
+        });
+        const body = await res.json();
+
+        if (res.status === 200) {
+            window.location.href = '/';
+        }   
+        else {
+            message = `Error: ${res.status} ${res.statusText} - ${body.message}`;
+        }
+    }
 </script>
 
 <!-- svelte-ignore a11y_consider_explicit_label -->
@@ -26,7 +52,7 @@
             <h3 class="text-lg font-bold">Edit Job Details</h3>
 
             <!-- svelte-ignore a11y_consider_explicit_label -->
-            <button class="btn btn-circle btn-sm btn-success" onclick={() => requirements = [...requirements, String(requirements.length + 1)]}>
+            <button class="btn btn-circle btn-sm btn-success" onclick={() => requirements = [...requirements, '']}>
                 <svg 
                     xmlns="http://www.w3.org/2000/svg"
                     width="24px"
@@ -52,6 +78,7 @@
                 type="text"
                 placeholder="Title"
                 class="input input-bordered w-full"
+                bind:value={title}
             />
         </label>
 
@@ -105,11 +132,14 @@
                 step="100000"
                 placeholder="Salary"
                 class="input input-bordered w-full"
+                bind:value={salary}
             />
         </label>
 
+        <h1 class="text-center text-error">{message}</h1>
+
         <div class="modal-action">
-            <button class="btn btn-warning">Update Job Details</button>
+            <button class="btn btn-warning" onclick={update_job}>Update Job Details</button>
         </div>
     </div>
     
