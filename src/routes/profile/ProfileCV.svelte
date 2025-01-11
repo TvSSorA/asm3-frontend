@@ -42,6 +42,23 @@
 
         reader.readAsDataURL(file);
     }
+
+    async function delete_cv() {
+        const res = await fetch('/api/cv', {
+            method: 'DELETE',
+            body: JSON.stringify({
+                username
+            })
+        });
+        const body = await res.json();
+
+        if (res.status === 200) {
+            window.location.href = "/profile";
+        } 
+        else {
+            message = `Error: ${res.status} ${res.statusText} - ${body.message}`;
+        }
+    }
 </script>
 
 <div class="profile-cv
@@ -69,7 +86,7 @@
                 Upload CV
             </button>
 
-            <button class="btn btn-error">
+            <button class="btn btn-error" onclick={delete_cv}>
                 Delete CV
             </button>
         </div>
