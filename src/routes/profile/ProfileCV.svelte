@@ -1,3 +1,49 @@
+<script lang="ts">
+    let { username }: { username: string } = $props();
+
+    let message: string = $state("");
+
+    async function upload_cv() {
+        const file_input = document.getElementById('file_input') as HTMLInputElement;
+        const files = file_input.files!;
+
+        if (!files.length) {
+            message = "Please select a file.";
+            return;
+        }
+
+        const file = files[0];
+        if (file.type !== "image/jpeg") {
+            message = "Please select a JPEG image file.";
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = async function () {
+            const file_content = (reader.result as string)!.split(',')[1];
+
+            const res = await fetch('/api/cv', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username,
+                    file_content
+                })
+            });
+            const body = await res.json();
+
+            if (res.status === 201) {
+                window.location.href = "/profile";
+            } 
+            else {
+                message = `Error: ${res.status} ${res.statusText} - ${body.message}`;
+            }
+        };
+
+        reader.readAsDataURL(file);
+    }
+</script>
+
 <div class="profile-cv
     card
     bg-base-100
@@ -11,13 +57,15 @@
         ">
             <input
                 type="file"
+                id="file_input"
                 class="
                     file-input file-input-bordered file-input-primary
                     w-full max-w-xs
                 "
+                accept=".jpg, .jpeg"
             />
 
-            <button class="btn btn-success">
+            <button class="btn btn-success" onclick={upload_cv}>
                 Upload CV
             </button>
 
@@ -25,5 +73,7 @@
                 Delete CV
             </button>
         </div>
+
+        <h1 class="text-center text-error">{message}</h1>
     </div>
 </div>

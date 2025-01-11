@@ -4,6 +4,7 @@
 
     let { data } = $props();
     const { user }: { user: Omit<User, "password"> } = data;
+    const { username } = user;
     
     const { type } = user;
 </script>
@@ -15,6 +16,6 @@
     <BasicDetails {user} />
 
     {#if type === "employee"}
-        <ProfileCV />
+        <ProfileCV {username} />
     {/if}
 </div>
