@@ -1,8 +1,31 @@
 <script lang="ts">
     import VNDIcon from '$lib/assets/vnd-icon.svg';
 
-    let { selected_job }: { selected_job: JobPost } = $props();
+    let { selected_job, username }: { selected_job: JobPost, username: string } = $props();
     const { title, company, salary, requirements } = $derived(selected_job);
+
+    let message = $state('');
+    let error = $state(false);
+
+    async function apply_job() {
+        const res = await fetch('/api/job', {
+            method: 'POST',
+            body: JSON.stringify({
+                title,
+                username
+            })
+        });
+        const body = await res.json();
+
+        if (res.status === 201) {
+            message = 'Successfully applied for job!';
+            error = false;
+        }   
+        else {
+            message = `Error: ${res.status} ${res.statusText} - ${body.message}`;
+            error = true;
+        }
+    }
 </script>
 
 <div class="
@@ -36,7 +59,9 @@
             </div>
         </div>
 
-        <button class="btn btn-primary btn-block">
+        <h1 class="text-center {error ? "text-error" : "text-success"}">{message}</h1>
+
+        <button class="btn btn-primary btn-block" onclick={apply_job}>
             Apply Now
         </button>
 
