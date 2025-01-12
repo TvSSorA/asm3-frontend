@@ -5,6 +5,8 @@
     let requirements: string[] = $state(job.requirements);
     let salary: number = $state(job.salary);
 
+    let dialog: HTMLDialogElement | undefined = $state();
+
     let message: string = $state('');
 
     async function update_job() {
@@ -29,7 +31,7 @@
 </script>
 
 <!-- svelte-ignore a11y_consider_explicit_label -->
-<button class="btn btn-circle btn-sm btn-warning" onclick={() => document.getElementById('edit_job_modal')?.showModal()}>
+<button class="btn btn-circle btn-sm btn-warning" onclick={() => dialog?.showModal()}>
     <svg 
         xmlns="http://www.w3.org/2000/svg"
         width="24px"
@@ -44,7 +46,7 @@
     </svg>
 </button>
 
-<dialog id="edit_job_modal" class="modal">
+<dialog bind:this={dialog} class="modal">
     <div class="modal-box">
         <div class="header-wrapper
             flex flex-row gap-4

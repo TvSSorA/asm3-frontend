@@ -1,6 +1,8 @@
 <script lang="ts">
     let { title, username }: { title: string, username: string } = $props();
 
+    let dialog: HTMLDialogElement | undefined = $state();
+
     let message: string = $state("");
 
     async function delete_job() {
@@ -23,7 +25,7 @@
 </script>
 
 <!-- svelte-ignore a11y_consider_explicit_label -->
-<button class="btn btn-circle btn-sm btn-error" onclick={() => document.getElementById('delete_job_modal')?.showModal()}>
+<button class="btn btn-circle btn-sm btn-error" onclick={() => dialog?.showModal()}>
     <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6"
@@ -40,7 +42,7 @@
     </svg>
 </button>
 
-<dialog id="delete_job_modal" class="modal">
+<dialog bind:this={dialog} class="modal">
     <div class="modal-box">
         <h3 class="text-lg font-bold">Are you really sure?</h3>
         <p class="py-4">This will <strong>completely</strong> delete this job post.</p>
