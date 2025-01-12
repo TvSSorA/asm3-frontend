@@ -2,7 +2,7 @@
     import VNDIcon from '$lib/assets/vnd-icon.svg';
 
     let { selected_job }: { selected_job: JobPost } = $props();
-    const { title, company, salary, requirements } = selected_job;
+    const { title, company, salary, requirements } = $derived(selected_job);
 </script>
 
 <div class="

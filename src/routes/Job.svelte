@@ -5,7 +5,7 @@
     import VNDIcon from '$lib/assets/vnd-icon.svg';
 
     let { selected_job_index = $bindable(), job, username, i, type }: { selected_job_index: number | null, job: JobPost, username: string, i: number, type: "employee" | "company" } = $props();
-    const { title, company, salary, requirements } = job;
+    const { title, company, salary, requirements } = $derived(job);
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
