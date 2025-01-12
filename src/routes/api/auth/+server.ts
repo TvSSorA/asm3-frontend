@@ -21,6 +21,7 @@ export const POST: RequestHandler = async ({ request }) => {
     const data = await res.json();
 
     if (data.error) {
+        if (data.error === "InvalidCredentials") return exception_handler(400, "Bad Request", "Wrong password or username");
         return exception_handler(500, "Internal Server Error", "Unexpected Server Error");
     }
 

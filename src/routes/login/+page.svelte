@@ -1,10 +1,14 @@
 <script lang="ts">
+    import { encryptor } from "$lib/encryptor";
+
     let username = $state('');
     let password = $state('');
 
     let message = $state('');
 
     async function authenticate() {
+        const encrypted_password = encryptor(password);
+
         const res = await fetch('/api/auth', {
             method: 'POST',
             headers: {
@@ -12,7 +16,7 @@
             },
             body: JSON.stringify({
                 username,
-                password
+                password: encrypted_password
             })
         });
         const body: AccessToken & ErrorMessage = await res.json();

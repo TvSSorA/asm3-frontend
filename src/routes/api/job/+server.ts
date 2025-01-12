@@ -36,7 +36,6 @@ export const POST: RequestHandler = async ({ request }) => {
         })
     });
     const data = await res.json();
-    console.log(data)
 
     if (data.error) {
         if (data.error === "ConditionalCheckFailedException") return exception_handler(400, "Bad Request", "You already applied to this job!");

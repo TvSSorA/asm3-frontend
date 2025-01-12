@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { encryptor } from "$lib/encryptor";
+
     let { username }: { username: string } = $props();
 
     let password: string = $state('');
@@ -14,11 +16,13 @@
             return;
         }
 
+        const encrypted_password = encryptor(password);
+
         const res = await fetch('/api/user', {
             method: 'PUT',
             body: JSON.stringify({
                 username,
-                password
+                password: encrypted_password
             })
         });
         const body = await res.json();
