@@ -16,6 +16,12 @@
             return;
         }
 
+        if (!/^(?=.*[a-z])(?=.*[A-Z]).{8,}$/g.test(password)) {
+            message = 'Password must contain at least 8 characters, one uppercase and one lowercase letter.';
+            error = true;
+            return;
+        }
+
         const encrypted_password = encryptor(password);
 
         const res = await fetch('/api/user', {
