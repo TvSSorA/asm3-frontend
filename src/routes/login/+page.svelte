@@ -1,3 +1,33 @@
+<script lang="ts">
+    let username = $state('');
+    let password = $state('');
+
+    let message = $state('');
+
+    async function authenticate() {
+        const res = await fetch('/api/auth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
+        });
+        const body: AccessToken & ErrorMessage = await res.json();
+        const { token, expires } = body;
+
+        if (res.status === 201) {
+            document.cookie = `token=${token}; path=/; SameSite=lax; Expires=${new Date(expires).toUTCString()}; Secure`;
+            window.location.href = '/';
+        }
+        else {
+            message = `Error: ${res.status} ${res.statusText} - ${body.message}`;
+        }
+    }
+</script>
+
 <div class="login
     flex justify-center
     py-20
@@ -22,6 +52,7 @@
                     type="text"
                     placeholder="Username"
                     class="input input-bordered w-full"
+                    bind:value={username}
                 />
             </label>
     
@@ -31,9 +62,10 @@
                 </div>
     
                 <input 
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     class="input input-bordered w-full"
+                    bind:value={password}
                 />
             </label>
 
@@ -41,8 +73,10 @@
                 Don't have an account yet? <a href="/signup" class="text-primary hover:underline">Sign Up</a>
             </p>
 
+            <h1 class="text-center text-error">{message}</h1>
+
             <div class="card-actions justify-end">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" onclick={authenticate}>
                     Login
                 </button>
             </div>
