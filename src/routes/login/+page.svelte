@@ -27,7 +27,7 @@
         const { token, expires } = body;
 
         if (res.status === 201) {
-            document.cookie = `token=${token}; path=/; SameSite=lax; Expires=${new Date(expires).toUTCString()}; Secure`;
+            document.cookie = `token=${token}; path=/; SameSite=lax; Expires=${new Date(expires).toUTCString()}`;
             window.location.href = '/';
         }
         else {

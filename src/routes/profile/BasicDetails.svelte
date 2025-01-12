@@ -6,7 +6,7 @@
     const { username, first_name, last_name } = user;
 
     async function logout() {
-        document.cookie = "token=; path=/; SameSite=lax; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure";
+        document.cookie = "token=; path=/; SameSite=lax; Expires=Thu, 01 Jan 1970 00:00:00 GMT";
         window.location.href = "/";
     }
 </script>
