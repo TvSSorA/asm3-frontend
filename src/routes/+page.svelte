@@ -9,6 +9,10 @@
     let { job_posts }: { job_posts: JobPost[] } = $state(data);
     const { username, type } = user;
 
+    if (type === "company") {
+        job_posts = job_posts.filter(job => job.company === username);
+    }
+
     let message: string = $state("");
 
     let selected_job_index: number | null = $state(null);
