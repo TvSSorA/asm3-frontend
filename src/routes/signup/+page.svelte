@@ -4,7 +4,7 @@
     let confirm_password: string = $state('');
     let first_name: string = $state('');
     let last_name: string = $state('');
-    let type: string = $state('employee');
+    let type: string = $state('');
 
     let error: boolean = $state(false);
     let message: string = $state('');
@@ -135,8 +135,10 @@
 
                         <input 
                             type="radio"
-                            name="radio-10"
+                            name="type"
+                            value="employee"
                             class="radio checked:bg-primary"
+                            bind:group={type}
                         />
                     </label>
 
@@ -148,8 +150,10 @@
 
                         <input 
                             type="radio"
-                            name="radio-10"
+                            name="type"
+                            value="company"
                             class="radio checked:bg-primary"
+                            bind:group={type}
                         />
                     </label>
                 </div>
