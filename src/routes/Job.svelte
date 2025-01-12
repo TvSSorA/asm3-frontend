@@ -1,10 +1,11 @@
 <script lang="ts">
     import EditJobModal from './EditJobModal.svelte';
     import DeleteJobModal from './DeleteJobModal.svelte';
+    import ViewApplicantsModal from './ViewApplicantsModal.svelte';
 
     import VNDIcon from '$lib/assets/vnd-icon.svg';
 
-    let { selected_job_index = $bindable(), job, username, i, type }: { selected_job_index: number | null, job: JobPost, username: string, i: number, type: "employee" | "company" } = $props();
+    let { selected_job_index = $bindable(), job, username, selected_job_applicant, select_applicant, i, type }: { selected_job_index: number | null, job: JobPost, username: string, selected_job_applicant: { title: string, username: string}[], select_applicant: (title: string) => void, i: number, type: "employee" | "company" } = $props();
     const { title, company, salary, requirements } = $derived(job);
 </script>
 
@@ -23,6 +24,7 @@
 
                 {#if type === "company"}
                     <div class="job-buttons">
+                        <ViewApplicantsModal {selected_job_applicant} {title} {select_applicant} />
                         <EditJobModal {job} {username} />
                         <DeleteJobModal {title} {username} />
                     </div>

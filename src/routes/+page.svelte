@@ -5,7 +5,7 @@
     import AddJobModal from './AddJobModal.svelte';
 
     let { data } = $props();
-    const { user }: { user: Omit<User, "password">  } = data;
+    const { user, job_applicants }: { user: Omit<User, "password">, job_applicants: { title: string, username: string}[] } = data;
     let { job_posts }: { job_posts: JobPost[] } = $state(data);
     const { username, type } = user;
 
@@ -17,6 +17,11 @@
 
     let selected_job_index: number | null = $state(null);
     let selected_job: JobPost | null = $derived(selected_job_index !== null ? job_posts[selected_job_index] : null);
+
+    let selected_job_applicant: { title: string, username: string}[] = $state([]);
+    function select_applicant(title: string) {
+        selected_job_applicant = job_applicants.filter(applicant => applicant.title === title);
+    }
 </script>
 
 <div class="home
@@ -36,13 +41,13 @@
                 flex flex-col gap-8 basis-5/12
             ">
                 {#each job_posts as job, i}
-                    <Job bind:selected_job_index {job} {username} {i} {type} />
+                    <Job bind:selected_job_index {job} {username} {selected_job_applicant} {select_applicant} {i} {type} />
                 {/each}
             </div>
             
             <div class="job-display basis-7/12">
                 {#if selected_job !== null}
-                    <JobDetails {selected_job} />
+                    <JobDetails {username} {selected_job} />
                 {/if}
             </div>
         </div>
@@ -56,7 +61,7 @@
             w-4/5
         ">
             {#each job_posts as job, i}
-                <Job bind:selected_job_index {job} {username} {i} {type} />
+                <Job bind:selected_job_index {job} {username} {selected_job_applicant} {select_applicant} {i} {type} />
             {/each}
         </div>
     {:else}
