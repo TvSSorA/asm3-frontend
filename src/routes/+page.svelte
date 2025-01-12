@@ -59,6 +59,14 @@
                 <Job bind:selected_job_index {job} {username} {i} {type} />
             {/each}
         </div>
+    {:else}
+        <h1 class="text-6xl">COSC2822 - Cloud Developing</h1>
+        <h2 class="text-4xl">Assignment 3 - Group Project</h2>
+        <h3 class="text-2xl">Final Product</h3>
+
+        <a href="/login" class="btn btn-primary">
+            Sign In
+        </a>
     {/if}
 
     <h1 class="text-center text-error text-4xl">{message}</h1>
