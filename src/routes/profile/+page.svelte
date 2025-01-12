@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>Profile</title>
+</svelte:head>
+
 <script lang="ts">
     import BasicDetails from "./BasicDetails.svelte";
     import ProfileCV from "./ProfileCV.svelte";

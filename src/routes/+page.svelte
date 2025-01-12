@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>Home</title>
+</svelte:head>
+
 <script lang="ts">
     import SearchBar from './SearchBar.svelte';
     import Job from './Job.svelte';

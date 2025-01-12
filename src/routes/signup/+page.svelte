@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>Sign Up</title>
+</svelte:head>
+
 <script lang="ts">
     import { encryptor } from "$lib/encryptor";
 
